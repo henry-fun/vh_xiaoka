@@ -1,0 +1,121 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('kaquan', array('op'=>'display'));}">卡券信息</a></li>
+	<li {if $op == 'create'}class="active"{/if}><a href="{php echo $this->createWebUrl('kaquan', array('op'=>'create'));}">添加卡券</a></li>
+</ul>
+
+<!-- 展示卡券信息 -->
+{if $op == 'display'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微信卡券 —— 卡券信息列表</div>
+			<div class="panel-body">
+				<div class="table-responsive panel-body">
+					<table class="table table-hover" style="min-width: 300px;">
+						<thead class="navbar-inner">
+							<tr>
+								<th style="width:50px;">编号</th>
+								<th style="width:200px;">卡券编码</th>
+								<th style="width:500px;">卡券介绍</th>
+								<th style="width:100px">备注</th>
+								<th style="width:80px;">操作</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $allKaquans $key $item}
+							<tr>
+								<td class="text-left">
+									<a href="javascript:;" class="btn btn-info">{$item['id']}</a>
+								</td>
+								<td>
+									<input type="text" name="allKaquans[{$key}][card_id]" value="{$item['card_id']}" class="form-control"/>
+								</td>
+								<td>
+									<input type="text" name="allKaquans[{$key}][card_detail]" value="{$item['card_detail']}" class="form-control"/>
+								</td>
+								<td>
+									<input type="text" name="allKaquans[{$key}][comment]" value="{$item['comment']}" class="form-control"/>
+								</td>
+								<td>
+									<a onclick="if(!confirm('删除后将不可恢复,确定删除吗?')) return false;" href="{php echo $this->createWebUrl('kaquan', array('op'=>'delete', 'id'=>$key));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i> </a>
+								</td>
+								<td></td>
+							</tr>
+							{/loop}
+							{if !empty($allKaquans)}
+							<tr>
+								<td colspan="4">
+									<input name="submit" type="submit" value="保存" class="btn btn-success" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+							{else}
+							<tr>
+								<td colspan="4">
+									尚未添加卡券信息
+								</td>
+							</tr>
+							{/if}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{/if} <!-- end of display -->
+
+<!-- 创建卡券信息 -->
+{if $op == 'create'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="setting-form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微信卡券 —— 信息添加</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">卡券编码</label>
+					<div class="col-xs-12 col-sm-4">
+						<input type="text" name="kaquan[card_id]" class="form-control" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">卡券介绍</label>
+					<div class="col-sm-8">
+						<textarea style="height:200px;" id="description" name="kaquan[card_detail]" class="form-control description" cols="60"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-sm-offset-3 col-md-offset-2 col-lg-offset-2">
+						<input name="submit" type="submit" value="提交" class="btn btn-primary" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+require(['jquery', 'util'], function($, util){
+	$(function(){
+		$('#setting-form').submit(function(){
+			var result = true;
+			if($('input[name="data[card_id]"]').val() == ''){
+				result = false;
+				util.message('未填写卡券编码！');
+			}
+			if($('input[name="data[card_detail]"]').val() == ''){
+				result = false;
+				util.message('未填写卡券详情！');
+			}
+			return result;
+		});
+	});
+});
+</script>
+{/if} <!-- end of create -->
+
+{template 'common/footer'}

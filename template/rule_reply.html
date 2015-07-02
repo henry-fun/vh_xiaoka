@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+	<div class="panel-heading">添加规则详情</div><br/>
+
+	<!-- 添加一个隐藏的input记录提交规则的id值 -->
+	<input type="hidden" name="reply_id" value="{$reply['id']}" />
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">规则详情</label>
+		<div class="col-sm-9">
+			<textarea style="height:200px;" class="form-control" name="rule" id="rule" cols="70">{$reply['rule']}</textarea>
+			<!-- <span class="help-block">当用户进入此话题时，返回用户的提示信息。
+				<a class="" href="javascript:;" onclick="setemotion(this,'enter-tips');"><i class="fa fa-github-alt"></i> 表情</a>
+				<script type="text/javascript">
+					function setemotion(obj, id){
+						require(['util', 'jquery'], function(util, $){
+							var t = $('#'+id).get(0);
+							util.emotion(obj, t, function(txt, obj, t){
+								t.value = $(target).get(0).value;
+							});
+						});
+					}
+				</script>
+			</span> -->
+		</div>
+	</div>
+
+</div>
